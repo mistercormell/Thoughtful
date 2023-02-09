@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    let messages = ["I love you and I'm really missing you today x","You are my sunshine xxx", "I'm really lucky to be married to you xx",""]
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
+            Image(systemName: "heart")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Button("Send Message") {
+                createMessage()
+            }
         }
         .padding()
+    }
+    
+    func createMessage() {
+        let body = messages.randomElement() ?? "You are my best friend xxxx"
+        let smsString = "sms:+447717503458&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let smstoUrl = URL(string: smsString!)!
+        if UIApplication.shared.canOpenURL(smstoUrl) {
+                UIApplication.shared.open(smstoUrl, options: [:])
+        }
     }
 }
 
